@@ -9,3 +9,14 @@
   font-family: 'Azeret Mono', monospace;
   font-size: 30px;
 }
+
+.app-body{
+  padding: 20px;
+  text-align: center;
+}
+
+.language-select{
+  height: 40px !important;
+  margin-bottom: 15px;
+  outline: none !important;
+}

@@ -1,163 +1,210 @@
-// import './App.css';
-// import { useEffect, useState } from 'react';
+// import React, { useState, useEffect } from 'react';
+// import { Form, TextArea, Button, Icon } from 'semantic-ui-react';
 // import axios from 'axios';
 
-// function App() {
-//   const [options, setOptions] = useState([]);
-//   const [to, setTo] = useState('en');
-//   const [from, setFrom] = useState('en');
-//   const [input, setInput] = useState('');
-//   const [output, setOutput] = useState('');
-
-//   const translate = () => {
-//     // curl -X POST "https://libretranslate.de/translate" -H  "accept: application/json" -H  "Content-Type: application/x-www-form-urlencoded" -d "q=hello&source=en&target=es&api_key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-
-//     const params = new URLSearchParams();
-//     params.append('q', input);
-//     params.append('source', from);
-//     params.append('target', to);
-//     params.append('api_key', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx');
-
+// export default function App() {
+//   const [inputText, setInputText] = useState('');
+//   const [resultText, setResultText] = useState('');
+//   const [selectedLanguageKey, setLanguageKey] = useState('');
+//   const [languagesList, setLanguagesList] = useState([]);
+//   const [detectLanguageKey, setdetectedLanguageKey] = useState('');
+//   const getLanguageSource = () => {
 //     axios
-//       .post('https://libretranslate.de/translate', params, {
-//         headers: {
-//           accept: 'application/json',
-//           'Content-Type': 'application/x-www-form-urlencoded',
-//         },
+//       .post(`https://libretranslate.de/detect`, {
+//         q: inputText,
 //       })
-//       .then(res => {
-//         console.log(res.data);
-//         setOutput(res.data.translatedText);
+//       .then(response => {
+//         setdetectedLanguageKey(response.data[0].language);
 //       });
+//   };
+//   const translateText = () => {
+//     setResultText(inputText);
+
+//     getLanguageSource();
+
+//     let data = {
+//       q: inputText,
+//       source: detectLanguageKey,
+//       target: selectedLanguageKey,
+//     };
+//     axios.post(`https://libretranslate.de/translate`, data).then(response => {
+//       setResultText(response.data.translatedText);
+//     });
+//   };
+
+//   const languageKey = selectedLanguage => {
+//     setLanguageKey(selectedLanguage.target.value);
 //   };
 
 //   useEffect(() => {
-//     axios
-//       .get('https://libretranslate.de/languages', {
-//         headers: { accept: 'application/json' },
-//       })
-//       .then(res => {
-//         console.log(res.data);
-//         setOptions(res.data);
-//       });
-//   }, []);
+//     axios.get(`https://libretranslate.de/languages`).then(response => {
+//       setLanguagesList(response.data);
+//     });
 
-//   //  curl -X GET "https://libretranslate.de/languages" -H  "accept: application/json"
-
+//     getLanguageSource();
+//   }, [inputText]);
 //   return (
-//     <div className="App">
-//       <div>
-//         From ({from}) :
-//         <select onChange={e => setFrom(e.target.value)}>
-//           {options.map(opt => (
-//             <option key={opt.code} value={opt.code}>
-//               {opt.name}
-//             </option>
-//           ))}
-//         </select>
-//         To ({to}) :
-//         <select onChange={e => setTo(e.target.value)}>
-//           {options.map(opt => (
-//             <option key={opt.code} value={opt.code}>
-//               {opt.name}
-//             </option>
-//           ))}
-//         </select>
+//     <div>
+//       <div className="app-header">
+//         <h2 className="header">Translate Me</h2>
 //       </div>
-//       <div>
-//         <textarea cols="50" rows="8" onInput={e => setInput(e.target.value)}></textarea>
-//       </div>
-//       <div>
-//         <textarea cols="50" rows="8" value={output}></textarea>
-//       </div>
-//       <div>
-//         <button onClick={e => translate()}>Translate</button>
+
+//       <div className="app-body">
+//         <div>
+//           <Form>
+//             <Form.Field
+//               control={TextArea}
+//               placeholder="Type Text to Translate.."
+//               onChange={e => setInputText(e.target.value)}
+//             />
+
+//             <select className="language-select" onChange={languageKey}>
+//               <option>Please Select Language..</option>
+//               {languagesList.map(language => {
+//                 return <option value={language.code}>{language.name}</option>;
+//               })}
+//             </select>
+
+//             <Form.Field
+//               control={TextArea}
+//               placeholder="Your Result Translation.."
+//               value={resultText}
+//             />
+
+//             <Button color="orange" size="large" onClick={translateText}>
+//               <Icon name="translate" />
+//               Translate
+//             </Button>
+//           </Form>
+//         </div>
 //       </div>
 //     </div>
 //   );
 // }
-
-// export default App;
-import React, { useState, useEffect } from 'react';
-import { Form, TextArea, Button, Icon } from 'semantic-ui-react';
-import axios from 'axios';
-
-export default function App() {
-  const [inputText, setInputText] = useState('');
-  const [resultText, setResultText] = useState('');
-  const [selectedLanguageKey, setLanguageKey] = useState('');
-  const [languagesList, setLanguagesList] = useState([]);
-  const [detectLanguageKey, setdetectedLanguageKey] = useState('');
-  const getLanguageSource = () => {
-    axios
-      .post(`https://libretranslate.de/detect`, {
-        q: inputText,
-      })
-      .then(response => {
-        setdetectedLanguageKey(response.data[0].language);
-      });
-  };
-  const translateText = () => {
-    setResultText(inputText);
-
-    getLanguageSource();
-
-    let data = {
-      q: inputText,
-      source: detectLanguageKey,
-      target: selectedLanguageKey,
-    };
-    axios.post(`https://libretranslate.de/translate`, data).then(response => {
-      setResultText(response.data.translatedText);
-    });
-  };
-
-  const languageKey = selectedLanguage => {
-    setLanguageKey(selectedLanguage.target.value);
-  };
-
+import React, { useEffect } from 'react';
+import countries from './components/data';
+const App = () => {
   useEffect(() => {
-    axios.get(`https://libretranslate.de/languages`).then(response => {
-      setLanguagesList(response.data);
+    const fromText = document.querySelector('.from-text');
+    const toText = document.querySelector('.to-text');
+    const exchageIcon = document.querySelector('.exchange');
+    const selectTag = document.querySelectorAll('select');
+    const icons = document.querySelectorAll('.row i');
+    const translateBtn = document.querySelector('button');
+    selectTag.forEach((tag, id) => {
+      for (let country_code in countries) {
+        let selected =
+          id === 0
+            ? country_code === 'en-GB'
+              ? 'selected'
+              : ''
+            : country_code === 'hi-IN'
+            ? 'selected'
+            : '';
+        let option = `<option ${selected} value="${country_code}">${countries[country_code]}</option>`;
+        tag.insertAdjacentHTML('beforeend', option);
+      }
     });
 
-    getLanguageSource();
-  }, [inputText]);
+    exchageIcon.addEventListener('click', () => {
+      console.log('helo');
+      let tempText = fromText.value;
+      let tempLang = selectTag[0].value;
+      console.log(tempText);
+      console.log(tempLang);
+      fromText.value = toText.value;
+      toText.value = tempText;
+      selectTag[0].value = selectTag[1].value;
+      selectTag[1].value = tempLang;
+    });
+
+    fromText.addEventListener('keyup', () => {
+      if (!fromText.value) {
+        toText.value = '';
+      }
+    });
+
+    translateBtn.addEventListener('click', () => {
+      let text = fromText.value.trim();
+      let translateFrom = selectTag[0].value;
+      let translateTo = selectTag[1].value;
+      if (!text) return;
+      toText.setAttribute('placeholder', 'Translating...');
+      let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
+      fetch(apiUrl)
+        .then(res => res.json())
+        .then(data => {
+          toText.value = data.responseData.translatedText;
+          data.matches.forEach(data => {
+            if (data.id === 0) {
+              toText.value = data.translation;
+            }
+          });
+          toText.setAttribute('placeholder', 'Translation');
+        });
+    });
+
+    icons.forEach(icon => {
+      icon.addEventListener('click', ({ target }) => {
+        if (!fromText.value || !toText.value) return;
+        if (target.classList.contains('fa-copy')) {
+          if (target.id === 'from') {
+            navigator.clipboard.writeText(fromText.value);
+          } else {
+            navigator.clipboard.writeText(toText.value);
+          }
+        } else {
+          let utterance;
+          if (target.id === 'from') {
+            utterance = new SpeechSynthesisUtterance(fromText.value);
+            utterance.lang = selectTag[0].value;
+          } else {
+            utterance = new SpeechSynthesisUtterance(toText.value);
+            utterance.lang = selectTag[1].value;
+          }
+          speechSynthesis.speak(utterance);
+        }
+      });
+    });
+  }, []);
   return (
-    <div>
-      <div className="app-header">
-        <h2 className="header">Translate Me</h2>
-      </div>
-
-      <div className="app-body">
-        <div>
-          <Form>
-            <Form.Field
-              control={TextArea}
-              placeholder="Type Text to Translate.."
-              onChange={e => setInputText(e.target.value)}
-            />
-
-            <select className="language-select" onChange={languageKey}>
-              <option>Please Select Language..</option>
-              {languagesList.map(language => {
-                return <option value={language.code}>{language.name}</option>;
-              })}
-            </select>
-
-            <Form.Field
-              control={TextArea}
-              placeholder="Your Result Translation.."
-              value={resultText}
-            />
-
-            <Button color="orange" size="large" onClick={translateText}>
-              <Icon name="translate" />
-              Translate
-            </Button>
-          </Form>
+    <>
+      <div className="container">
+        <div className="wrapper">
+          <div className="text-input">
+            <textarea spellcheck="false" className="from-text" placeholder="Enter text"></textarea>
+            <textarea
+              spellcheck="false"
+              readonly
+              disabled
+              className="to-text"
+              placeholder="Translation"
+            ></textarea>
+          </div>
+          <ul className="controls">
+            <li className="row from">
+              <div className="icons">
+                <i id="from" className="fas fa-volume-up"></i>
+                <i id="from" className="fas fa-copy"></i>
+              </div>
+              <select></select>
+            </li>
+            <li className="exchange">
+              <i className="fas fa-exchange-alt"></i>
+            </li>
+            <li className="row to">
+              <select></select>
+              <div className="icons">
+                <i id="to" className="fas fa-volume-up"></i>
+                <i id="to" className="fas fa-copy"></i>
+              </div>
+            </li>
+          </ul>
         </div>
+        <button>Translate Text</button>
       </div>
-    </div>
+    </>
   );
-}
+};
+
+export default App;

@@ -1,9 +1,39 @@
-const Arrows = () => {
+import SelectDropDown from './SelectDropDown';
+
+const TextBox = ({
+  style,
+  setShowModal,
+  selectedLanguage,
+  setTextToTranslate,
+  textToTranslate,
+  translatedText,
+  setTranslatedText,
+}) => {
+  const handleClick = () => {
+    setTextToTranslate('');
+    setTranslatedText('');
+  };
   return (
-    <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path>
-    </svg>
+    <div className={style}>
+      <SelectDropDown
+        style={style}
+        setShowModal={setShowModal}
+        selectedLanguage={selectedLanguage}
+      />
+      <textarea
+        disabled={style === 'output'}
+        className={style}
+        placeholder={style == 'input' ? 'Enter text' : 'Translation'}
+        onChange={e => setTextToTranslate(e.target.value)}
+        value={style === 'input' ? textToTranslate : translatedText}
+      />
+      {style === 'input' && (
+        <div className="delete" onClick={handleClick}>
+          ˟
+        </div>
+      )}
+    </div>
   );
 };
 
-export default Arrows;
+export default TextBox;

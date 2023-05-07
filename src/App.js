@@ -22,7 +22,7 @@ const App = () => {
   }, []);
 
   const translate = async () => {
-    console.log('trainsalte');
+    console.log('transalte');
     const data = {
       textToTranslate,
       outputLanguage,

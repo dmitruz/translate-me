@@ -98,7 +98,7 @@ const App = () => {
             ? country_code === 'en-GB'
               ? 'selected'
               : ''
-            : country_code === 'hi-IN'
+            : country_code === 'uk-UA'
             ? 'selected'
             : '';
         let option = `<option ${selected} value="${country_code}">${countries[country_code]}</option>`;
@@ -170,6 +170,7 @@ const App = () => {
   return (
     <>
       <div className="container">
+        <h2 class="header-text">Translate Me</h2>
         <div className="wrapper">
           <div className="text-input">
             <textarea spellcheck="false" className="from-text" placeholder="Enter text"></textarea>

@@ -4,23 +4,65 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family:'Courier New', Courier, monospace
 }
+h2 {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 body {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 10px;
   min-height: 100vh;
-  background: #ffc107;
+  background:  url("./img/colourful-alphabet-letters-760.jpg");
+  background-size:cover;
+}
+
+  
+
+::placeholder {
+  color: black;
+}
+textarea {
+  font-family: 'Courier New', Courier, monospace;
+  color: blueviolet;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 2.0;
 }
 .container {
+  display: flex;
+  flex-direction: column;
   min-width: 700px;
   width: 100%;
   padding: 30px;
-  background: #fff;
+  background: coral;
   border-radius: 7px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.01);
+  align-items: center;
+}
+
+@media screen and (min-width: 360px) {
+.container {
+width: 360px;
+margin: 0 auto;
+
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  margin-left: 60px;
+  
+  align-items: center;
+}
+ 
+}
+.header-text {
+  font-size: 36px;
+  color:blueviolet;
 }
 .wrapper {
   border-radius: 5px;
@@ -115,12 +157,18 @@ li,
 .controls i:active {
   transform: scale(0.9);
 }
+.selection {
+  font-family: 'Courier New', Courier, monospace;
+  color: blueviolet;
+}
 .container button {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
   width: 100%;
   padding: 14px;
   outline: none;
   border: none;
-  color: #fff;
+  color: blueviolet;
   cursor: pointer;
   margin-top: 20px;
   font-size: 17px;

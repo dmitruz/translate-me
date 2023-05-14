@@ -124,7 +124,11 @@ margin: 0 auto;
 .wrapper {
   border-radius: 5px;
   border: 1px solid #ccc;
+  margin-left: 0;
+  width: 500px;
 }
+
+
 .wrapper .text-input {
   display: flex;
   border-bottom: 1px solid #ccc;
@@ -231,4 +235,5 @@ li,
   font-size: 17px;
   border-radius: 5px;
   background: #ffc107;
+  font-size: 24px;
 }

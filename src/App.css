@@ -101,22 +101,7 @@ textarea {
   align-items: center;
 }
 
-@media screen and (min-width: 360px) {
-.container {
-width: 360px;
-margin: 0 auto;
 
-}
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 360px;
-  margin-left: 60px;
-  
-  align-items: center;
-}
- 
-}
 .header-text {
   font-size: 36px;
   color:blueviolet;
@@ -236,4 +221,21 @@ li,
   border-radius: 5px;
   background: #ffc107;
   font-size: 24px;
+}
+
+@media screen and (min-width: 360px) {
+.container {
+width: 360px;
+margin: 0 auto;
+
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  margin-left: 60px;
+  
+  align-items: center;
+}
+ 
 }
